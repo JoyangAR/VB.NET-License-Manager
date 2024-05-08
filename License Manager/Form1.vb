@@ -95,7 +95,7 @@ Public Class Form1
 
         Dim licenseId As Guid = Guid.NewGuid
 
-        Dim Ulicense As Portable.Licensing.License = Portable.Licensing.License.[New].WithUniqueIdentifier(licenseId).As(GetLicenseType).WithMaximumUtilization(10).WithAdditionalAttributes(AttributesDictionarty).WithProductFeatures(ProductFeatureDictionarty).LicensedTo(txtCustomer.Text, txtEMail.Text).ExpiresAt(CDate(dtpExpiration.Text)).CreateAndSignWithPrivateKey(PrivateKey, txtpassword.Text)
+        Dim Ulicense As Portable.Licensing.License = Portable.Licensing.License.[New].WithUniqueIdentifier(licenseId).As(GetLicenseType).WithMaximumUtilization(txtUsers.Text).WithAdditionalAttributes(AttributesDictionarty).WithProductFeatures(ProductFeatureDictionarty).LicensedTo(txtCustomer.Text, txtEMail.Text).ExpiresAt(CDate(dtpExpiration.Text)).CreateAndSignWithPrivateKey(PrivateKey, txtpassword.Text)
 
         Dim SfDLicense As New SaveFileDialog()
 
@@ -143,11 +143,11 @@ Public Class Form1
                     txtCustomerRO.Text = ULicense.Customer.Name.ToString
                     txtEMailRO.Text = ULicense.Customer.Email.ToString
                     txtUsersRO.Text = ULicense.Quantity.ToString
-                    txtAttributeNameRO.Text = "Software"
+                    txtAttributeNameRO.Text = txtAttributeName.Text
                     txtAttributeValueRO.Text = ULicense.AdditionalAttributes.Get(txtAttributeNameRO.Text)
                     chkSalesRO.Checked = ULicense.ProductFeatures.Get("Sales")
                     chkBillingRO.Checked = ULicense.ProductFeatures.Get("Billing")
-
+                    txtLicenseTypeRO.Text = ULicense.Type.ToString
                     lbxValidation.Items.Add(ValidateLicense(ULicense).ToString)
                 End If
             Catch Ex As Exception
